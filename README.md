@@ -1,17 +1,15 @@
-# TradingView Charting Library
+一、文件包结构
+    +/charting_library                包含所有的库文件
+        + /static                     存储图表库内部内容，不做其他用途
+        - charting_library.min.js     Charting Library窗口部件接口。不建议修改该文件
+        - charting_library.min.d.ts   窗口小部件界面的TypeScript定义
+        - datafeed-api.d.ts           数据接口的TypeScript定义
+    + /datafeeds                      
+        + /udf                        包含与UDF兼容的datafeed包装器（实现JS API以连接到Charting Library和UDF以连接到datafeed）
+    - index.html                      使用的小示例
+    - mobile_black.html               自定义实例
+    - mobile_white.html               自定义实例
+    - test.html                       图表库自定义功能的示例
 
 
-This repository contains the TradingView Charting Library package. If you use Git in your project, please feel free to use this repo as a submodule in yours.
 
-The `master` branch contains the current stable version. 
-
-The `unstable` branch contains the most recent features and fixes, but it can be less stable (actually, it's the beta, which is already thoroughly tested).
-
-### Documentation
-See our docs in this repository's [wiki](https://github.com/tradingview/charting_library/wiki). Please read it (at least the [Overview](https://github.com/tradingview/charting_library/wiki) and the [Best Practices](https://github.com/tradingview/charting_library/wiki/Best-practices)) before using the Library.
-
-### Issues Tracking
-We use GitHub's [Issues tracker](https://github.com/tradingview/charting_library/issues) for our project. Feel free to create bug reports and features requests. Make sure to read the documentation before asking questions - this will avoid repeated questions, leaving us more time for developing the library.
-
-### Stay Tuned
-[Follow us](https://twitter.com/intent/follow?screen_name=tv_charts) on Twitter to receive updates.
