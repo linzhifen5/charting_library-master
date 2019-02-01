@@ -13,9 +13,10 @@
 
 
 二、设置查询时间
-    time_frames: [   // Y/M/D 年月日，W表示周
-        { text: "2y", resolution: "6M", description: "2 Years" },  // 表示从现在到2年前的、k柱间隔是6个月
-        { text: "1y", resolution: "1M", description: "1 Years" },  // 表示从现在到1年前的、k柱间隔是1个月
+    time_frames: [         // Y/M/D 年月日，W表示周
+        {text: "2y", resolution: "6M", description: "2 Years", title: "2年"},  // 查从截止处（统计截止处）到2年前的、k柱间隔是6个月
+        {text: "1y", resolution: "1M", description: "1 Years", title: "1年"},  // 查从截止处（统计截止处）到1年前的、k柱间隔是1个月
+        {text: "3m", resolution: "1W", description: "3 Month", title: "3月"},  // 查从截止处（统计截止处）到3个月前的、k柱间隔是1周（由于使用简体中文以后矛盾所以添加title）
     ],
 
 
