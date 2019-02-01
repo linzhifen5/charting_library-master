@@ -1,56 +1,115 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
 
-		<title>TradingView Charting Library demo</title>
+<head>
 
-		<!-- Fix for iOS Safari zooming bug -->
-		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <title>TradingView Charting Library demo</title>
 
-		<script type="text/javascript" src="charting_library/charting_library.min.js"></script>
-		<script type="text/javascript" src="datafeeds/udf/dist/polyfills.js"></script>
-		<script type="text/javascript" src="datafeeds/udf/dist/bundle.js"></script>
+  <!-- Fix for iOS Safari zooming bug -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-		<script type="text/javascript">
+  <script type="text/javascript" src="charting_library/charting_library.min.js"></script>
+  <script type="text/javascript" src="datafeeds/udf/dist/polyfills.js"></script>
+  <script type="text/javascript" src="datafeeds/udf/dist/bundle.js"></script>
 
-			function getParameterByName(name) {
-				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-				var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-					results = regex.exec(location.search);
-				return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-			}
+  <script type="text/javascript">
 
-			TradingView.onready(function()
-			{
-				var widget = window.tvWidget = new TradingView.widget({
-					// debug: true, // uncomment this line to see Library errors and warnings in the console
-					fullscreen: true,
-					symbol: 'AAPL',
-					interval: 'D',
-					container_id: "tv_chart_container",
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 
-					//	BEWARE: no trailing slash is expected in feed URL
-					datafeed: new Datafeeds.UDFCompatibleDatafeed("https://demo_feed.tradingview.com"),
-					library_path: "charting_library/",
-					locale: getParameterByName('lang') || "en",
+    TradingView.onready(function () {
+      var widget = window.tvWidget = new TradingView.widget({
+        debug: true,
+        fullscreen: true,
+        symbol: 'BBT',
+        interval: 'D', //K线周期
+        container_id: "tv_chart_container",
 
-					disabled_features: ["use_localstorage_for_settings"],
-					enabled_features: ["study_templates"],
-					charts_storage_url: 'http://saveload.tradingview.com',
-					charts_storage_api_version: "1.1",
-					client_id: 'tradingview.com',
-					user_id: 'public_user_id',
-					theme: getParameterByName('theme'),
-				});
-			});
+        datafeed: new Datafeeds.UDFCompatibleDatafeed("https://demo_feed.tradingview.com"),
+        library_path: "charting_library/",  //图标存储路径
+        locale: getParameterByName('lang') || "zh",
 
-		</script>
+        disabled_features: ["use_localstorage_for_settings"], //禁用功能
+        enabled_features: ["study_templates"], //启用功能
+        charts_storage_url: 'http://saveload.tradingview.com', //这些参数是有关于高阶图表的保存/加载。
+        charts_storage_api_version: "1.1",  //后台版本
+        client_id: 'tradingview.com', //高阶图表的保存/加载
+        user_id: 'public_user_id', //高级保存
+        timezone: 'Asia/Chongqing', //时区
 
-	</head>
+        time_frames: [ //
+          { text: "50y", resolution: "6M", description: "50 Years" },
+          { text: "3y", resolution: "W", description: "3 Years", title: "3y" },
+          { text: "8m", resolution: "D", description: "8 Month" },
+          { text: "3d", resolution: "5", description: "3 Days" },
+          { text: "1000y", resolution: "W", description: "All", title: "All" },
+        ],
+        theme: "Dark", //主题颜色
+        toolbar_bg: "#171B2B", //工具栏背景
+        // loading_screen: { backgroundColor: "#000000" } // 加载显示的背景图
+        // custom_css_url   // 外部引入css修改字体透明
+        // left_toolbar:'off', // 关闭左工具栏
 
-	<body style="margin:0px;">
-		<div id="tv_chart_container"></div>
-	</body>
+        disabled_features:{
+          left_toolbar:'off',
+        },
+
+        widgetbar: {
+          details: true,
+          watchlist: true,
+          watchlist_settings: {
+            default_symbols: ["NYSE:AA", "NYSE:AAL", "NASDAQ:AAPL"],
+            readonly: false
+          }
+        },
+
+        rss_news_feed: {
+          "default": {
+            url: "https://articlefeeds.nasdaq.com/nasdaq/symbols?symbol={SYMBOL}",
+            name: "NASDAQ"
+          },
+          "stock": {
+            url: "http://feeds.finance.yahoo.com/rss/2.0/headline?s={SYMBOL}&region=US&lang=en-US",
+            name: "Yahoo Finance"
+          }
+        },
+
+        news_provider: {
+          is_news_generic: true,
+          get_news: function (symbol, callback) {
+            callback([
+              {
+                title: 'It is news for symbol ' + symbol,
+                shortDescription: 'Short description of the news item',
+                fullDescription: 'Full description of the news item',
+                published: new Date().valueOf(),
+                source: 'My own news source',
+                link: 'https://www.tradingview.com/'
+              },
+              {
+                title: 'Another news for symbol ' + symbol,
+                shortDescription: 'Short description of the news item',
+                fullDescription: 'Full description of the news item. Very long long long long long long long long text.',
+                published: new Date().valueOf(),
+                source: 'My own news source',
+              }
+            ]);
+          }
+        }
+      });
+    });
+
+  </script>
+
+</head>
+
+<body style="margin:0px;">
+  <div id="tv_chart_container"></div>
+</body>
 
 </html>
