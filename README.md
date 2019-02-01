@@ -12,4 +12,11 @@
     - test.html                       图表库自定义功能的示例
 
 
+二、设置查询时间
+    time_frames: [   // Y/M/D 年月日，W表示周
+        { text: "2y", resolution: "6M", description: "2 Years" },  // 表示从现在到2年前的、k柱间隔是6个月
+        { text: "1y", resolution: "1M", description: "1 Years" },  // 表示从现在到1年前的、k柱间隔是1个月
+    ],
+
+
 
